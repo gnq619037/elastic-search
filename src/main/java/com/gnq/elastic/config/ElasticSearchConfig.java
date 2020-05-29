@@ -16,11 +16,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticSearchConfig {
 
-    @Autowired RestClientBuilder restClientBuilder;
+//    @Autowired RestClientBuilder restClientBuilder;
 
     @Bean
     public RestClientBuilder restClientBuilder(){
-        String ipPort = "";
+        String ipPort = "127.0.0.1:9200";
         String[] address = ipPort.split(":");
         String ip = address[0];
         int port = Integer.parseInt(address[1]);
@@ -29,7 +29,7 @@ public class ElasticSearchConfig {
     }
 
     @Bean(name = "highLevelClient")
-    public RestHighLevelClient highLevelClient(){
+    public RestHighLevelClient highLevelClient(RestClientBuilder restClientBuilder){
         restClientBuilder.setMaxRetryTimeoutMillis(6000);
         return new RestHighLevelClient(restClientBuilder);
     }
